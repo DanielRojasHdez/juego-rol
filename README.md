@@ -4,11 +4,13 @@
 Bienvenido al repositorio del equipo. Aquí gestionaremos el código de nuestro proyecto.
 
 ## 📥 Cómo unirse al proyecto (Solo la primera vez)
+** Abre el visual studio code y asegurate de cerrar los proyectos que tengas abiertos.
 Para descargar el proyecto en tu ordenador, abre la terminal y ejecuta:
-```bash
-git clone [https://github.com/DanielRojasHdez/juego-rol](https://github.com/DanielRojasHdez/juego-rol)
-cd juego-rol
-
+1. cd documents (para ubicarnos en el directorio de documentos)
+2. git clone https://github.com/DanielRojasHdez/juego-rol
+3. cd juego-rol
+4. code .
+Al ejecutar estos comandos se te abrirá un nuevo visual studio code con el proyecto descargado (o por lo menos eso es lo que me ha salido a mi xD)
 ## Como trabajar con ramas(Branches)
 1. Actualiza tu repositorio local
 - git checkout main
