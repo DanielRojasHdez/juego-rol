@@ -1,1 +1,36 @@
 # juego-rol
+# 🐍 Proyecto Colaborativo Python
+
+Bienvenido al repositorio del equipo. Aquí gestionaremos el código de nuestro proyecto.
+
+## 📥 Cómo unirse al proyecto (Solo la primera vez)
+Para descargar el proyecto en tu ordenador, abre la terminal y ejecuta:
+```bash
+git clone [https://github.com/DanielRojasHdez/juego-rol](https://github.com/DanielRojasHdez/juego-rol)
+cd juego-rol
+
+## Como trabajar con ramas(Branches)
+1. Actualiza tu repositorio local
+- git checkout main
+- git pull origin main
+
+2. Crea tu propia rama(cambiale el nombre por algo como rama-bernat o rama-ruben)
+- git checkout -b nombre-de-tu-rama
+
+3. Como subir tus aportaciones
+cuando hayas terminado de programar tus cambios, guardalos localmente.
+- git add . (IMPORTANTE: añadir un espacio despues de add y el .)
+- git commit -m "explicacion breve de lo que has hecho"
+
+4. sube la tama a github
+- git push origin nombre-de-tu-rama
+
+RESUMEN DE LOS COMANDOS EXPLICADOS PARA EL EQUIPO:
+## 💡 Comandos clave explicados para el equipo
+
+Para que tus compañeros no se pierdan, aquí tienes lo que hace cada comando que les estás pidiendo:
+
+* **`git pull origin main`**: Es como "descargar la actualización". Trae todo lo que otros compañeros hayan subido y aprobado.
+* **`git checkout -b`**: Crea un espacio de trabajo seguro (la rama) para que, si rompen algo, no afecte al código que ya funciona en `main`.
+* **`git add .`**: Selecciona todos los archivos nuevos o modificados para la "foto" que vas a guardar.
+* **`git commit -m`**: Es el título de esa "foto". Ayuda a saber qué se hizo en ese momento.
