@@ -18,7 +18,7 @@ Al ejecutar estos comandos se te abrirá un nuevo visual studio code con el proy
 - git pull origin main
 
 2. Crea tu propia rama(cambiale el nombre por algo como rama-bernat o rama-ruben)
-** Una vez creada la correspondiente al usuario el comando checkout servirá para movernos a nuestra rama
+** Una vez creada la correspondiente al usuario el comando checkout servirá para movernos a la rama que hemos indicado(siempre trabajaremos cada uno en nuestra rama)
 - git checkout -b nombre-de-tu-rama
 
 3. Como subir tus aportaciones
