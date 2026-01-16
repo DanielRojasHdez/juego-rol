@@ -12,7 +12,7 @@ Para descargar el proyecto en tu ordenador, abre la terminal y ejecuta:
 4. code .
 Al ejecutar estos comandos se te abrirá un nuevo visual studio code con el proyecto descargado (o por lo menos eso es lo que me ha salido a mi xD)
 ## Como trabajar con ramas(Branches)
-1. Actualiza tu repositorio local
+1. Actualiza tu repositorio local para descargar las ultimas actualizaciones que se han hecho.
 - git checkout main
 - git pull origin main
 
