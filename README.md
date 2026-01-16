@@ -12,11 +12,13 @@ Para descargar el proyecto en tu ordenador, abre la terminal y ejecuta:
 4. code .
 Al ejecutar estos comandos se te abrirá un nuevo visual studio code con el proyecto descargado (o por lo menos eso es lo que me ha salido a mi xD)
 ## Como trabajar con ramas(Branches)
+** El comando checkout se utiliza para crear si no existe una rama o movernos a una rama concreta si ya existe la misma, en este caso nos movemos a la rama main que es la principal del proyecto para descargar las ultimas actualizaciones que hemos aprobado.
 1. Actualiza tu repositorio local para descargar las ultimas actualizaciones que se han hecho.
 - git checkout main
 - git pull origin main
 
 2. Crea tu propia rama(cambiale el nombre por algo como rama-bernat o rama-ruben)
+** Una vez creada la correspondiente al usuario el comando checkout servirá para movernos a nuestra rama
 - git checkout -b nombre-de-tu-rama
 
 3. Como subir tus aportaciones
