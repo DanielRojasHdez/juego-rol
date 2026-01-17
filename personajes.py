@@ -39,8 +39,8 @@ def increment_nivel (personaje):
 # Función de cambio de vida al ser atacado. Resta vida actual del heroe dependiendo del ataque del soldado o jefe
 
 
-def newhp (personaje, daño):
-    personaje.vida = personaje.vida - daño
+def newhp (personaje, ataque_base):
+    personaje.vida = personaje.vida - ataque_base
 
     if personaje.vida < 0:
         personaje.vida = 0
@@ -82,3 +82,13 @@ def defensa_on (personaje, ataque_base):
     
     if personaje.vida < 0:
         personaje.vida = 0
+
+#Funcion mensaje para mostrar vida personaje en cada turno
+
+def estado_actual(personaje):
+    print(personaje.nombre) 
+    print("vida: ", personaje.vida, "/", personaje.vida_max)
+    print("oleada")
+
+#newhp(heroe, jefe.ataque_base)
+#estado_actual(heroe)
