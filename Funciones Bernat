@@ -1,1 +1,21 @@
 Funciones Bernat
+-----
+# Fuincion para incremento de nivel dependiendo oleada
+def increment_nivel (Personaje):
+    incremento = 2
+    Personaje.ataque_base += incremento
+
+# Función de cambio de vida al ser atacado. Resta vida actual del heroe dependiendo del ataque del soldado o jefe
+def newhp (Personaje, daño):
+    Personaje.vida = Personaje.vida - daño
+
+    if Personaje.vida < 0:
+        Personaje.vida = 0
+
+#Funcion para determinar si el personaje sigue vivo
+def sigue_vivo (Personaje):
+    if Personaje.vida > 0:
+        return True  
+    else:
+        return False
+
