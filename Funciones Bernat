@@ -19,3 +19,4 @@ def sigue_vivo (Personaje):
     else:
         return False
 
+#Funcion curar, defenderse, parar de defenderse
