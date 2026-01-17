@@ -19,4 +19,22 @@ def sigue_vivo (Personaje):
     else:
         return False
 
-#Funcion curar, defenderse, parar de defenderse
+#Funcion para curar el personaje, por ejemplo con pocion o magia de cura
+def curar (personaje, cantidad):
+    personaje.vida += cantidad
+
+    if personaje.vida > personaje.vida_max:
+        personaje.vida = personaje.vida_max
+
+#Funcion para activar defensa y reducir un 20% daño recibido, se desactiva al usarse.
+def defensa_on (personaje, ataque_base):
+    if personaje.defenderse:
+        daño = ataque_base * 0.20
+        personaje.defenderse = False  # se desactiva tras usarla
+    else:
+        daño = ataque_base
+    
+    personaje.vida -= daño
+    
+    if personaje.vida < 0:
+        personaje.vida = 0
