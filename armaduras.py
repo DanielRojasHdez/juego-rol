@@ -6,47 +6,32 @@ class Armadura:
         self.durabilidad_max = durabilidad_max
         self.durabilidad = durabilidad_max
 
-armadura_ligera = Armadura("ligera", "Armadura ligera", 2, 50)
-armadura_media = Armadura("media", "Armadura media", 4, 40)
-armadura_pesada = Armadura("pesada", "Armadura pesada", 6, 30)
+    def reparar(self, cantidad):
+        self.durabilidad += cantidad
+        if self.durabilidad > self.durabilidad_max:
+            self.durabilidad = self.durabilidad_max
 
-# Funcion para aplicar reduccion de daño de la armadura y gasta durabilidad si protege
-def reducir_daño(armadura, daño):
-    if armadura is None:
-        return daño
-    if armadura.durabilidad <= 0:
-        return daño
-    daño_final = daño - armadura.reduccion
-    if daño_final < 0:
-        daño_final = 0
-    perder_durabilidad(armadura)
-    return daño_final
+# --- Funciones para que usen los demás ---
 
-# Funcion que Reduce la durabilidad de la armadura en 1.
-def perder_durabilidad(armadura):
-    if armadura.durabilidad > 0:
-        armadura.durabilidad -= 1
+def aplicar_armadura(defensor, daño):
+    arm = defensor.armadura
+    if arm and arm.durabilidad > 0:
+        daño_final = daño - arm.reduccion
+        arm.durabilidad -= 1  # Pierde durabilidad al recibir golpe
+        if daño_final < 0: daño_final = 0
+        return daño_final
+    return daño
 
-# Funcion para reparar la armadura sin superar el máximo.
-def reparar_armadura(armadura, cantidad):
-    if armadura is None:
-        return
-
-    armadura.durabilidad += cantidad
-
-    if armadura.durabilidad > armadura.durabilidad_max:
-        armadura.durabilidad = armadura.durabilidad_max
-
-# Funcion para saber si la armadura esta rota. Devuelve true
-def esta_rota(armadura):
-    if armadura is None:
-        return True
-
-    return armadura.durabilidad == 0
-
-# Funcion para mostrar el estado de la armadura
-def estado_armadura(armadura):
-    if armadura is None:
-        print("Sin armadura")
+def reparar_armadura(personaje):
+    if personaje.kits_reparacion > 0:
+        personaje.armadura.reparar(15)
+        personaje.kits_reparacion -= 1
+        print(f"¡{personaje.nombre} reparó su armadura!")
     else:
-        print(f"{armadura.nombre} ({armadura.durabilidad}/{armadura.durabilidad_max})")
+        print("¡No te quedan kits!")
+
+def resumen_armadura(personaje):
+    arm = personaje.armadura
+    if arm:
+        return f"Armadura: {arm.nombre} ({arm.durabilidad}/{arm.durabilidad_max})"
+    return "Sin armadura"
