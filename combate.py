@@ -1,17 +1,19 @@
 # git add .
 # git commit -m "Commit Bernat (Breve explicación)"
 # git push origin rama-bernat
-
+import random
 # Función para determinar fallo y golpe critico
 def golpe_suerte(personaje):
     suerte = random.randint(1, 100)
     if suerte < 5:
         daño = 0
+        print("Fallo el ataque")
     elif suerte < 95:
         daño = personaje.ataque_base
+        print("Ha sido un ataque Normal")
     else:
         daño = personaje.ataque_base * 2  
-         
+        print("Golpe Critico")
     return daño
     
 # Funcion para que la opción de defenderse no se quede pillada
