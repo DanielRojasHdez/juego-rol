@@ -17,8 +17,8 @@ class Personaje:
         self.armadura = armadura
 
 heroe = Personaje("Héroe", 100, 100, 10, False, False)
-soldado = Personaje("Soldado", 35, 35, random.randint(4, 6), None, None)
-jefe = Personaje("Jefe", 50, 50, random.randint(7, 8), None, None)
+soldado = Personaje("Soldado", 35, 35, random.randint(4, 6), False, False)
+jefe = Personaje("Jefe", 50, 50, random.randint(7, 9), False, False)
 
 
 # print(soldado.ataque_base)
@@ -28,12 +28,19 @@ jefe = Personaje("Jefe", 50, 50, random.randint(7, 8), None, None)
 
 def increment_nivel (personaje):
     incremento = 2
+    incremento_vida = 5
     personaje.ataque_base += incremento
+    personaje.vida_max += incremento_vida
 
 # Incremento +2 puntos al ataque del soldado
 # print(jefe.ataque_base)
+# print(jefe.vida_max)
 # increment_nivel(jefe)
 # print(jefe.ataque_base)
+# print(jefe.vida_max)
+# increment_nivel(jefe)
+# print(jefe.ataque_base)
+# print(jefe.vida_max)
 
 
 # Función de cambio de vida al ser atacado. Resta vida actual del heroe dependiendo del ataque del soldado o jefe
@@ -70,7 +77,7 @@ def curar (personaje, cantidad):
     if personaje.vida > personaje.vida_max:
         personaje.vida = personaje.vida_max
 
-#Funcion para activar defensa y reducir un 20% daño recibido, se desactiva al usarse.
+#Funcion para activar defensa y recibir solo un 20% de daño, se desactiva al usarse.
 def defensa_on (personaje, ataque_base):
     if personaje.defenderse:
         daño = ataque_base * 0.20
@@ -92,3 +99,21 @@ def estado_actual(personaje):
 
 #newhp(heroe, jefe.ataque_base)
 #estado_actual(heroe)
+
+# Funcion para que la opción de defenderse no se quede pillada
+
+def debug_defensa(personaje):
+    personaje.defenderse = False
+
+# Función para determinar fallo y golpe critico
+
+def golpe_suerte(personaje):
+    suerte = random.randint(1, 100)
+    if suerte < 5:
+        daño = 0
+    elif suerte < 95:
+        daño = personaje.ataque_base
+    else:
+        daño = personaje.ataque_base * 2   
+    return daño
+    
