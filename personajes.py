@@ -1,90 +1,55 @@
-# git add .
-# git commit -m "Commit Bernat (Breve explicación)"
-# git push origin rama-bernat
-
-
 import random
-
-# Clases
+import copy
+from armaduras import armadura_ligera, armadura_media, armadura_pesada
 
 class Personaje:
-    def __init__(self, nombre, vida, vida_max, ataque_base, defenderse, armadura):
+    # Constructor: se ejecuta en el momento en el que se crea un personaje
+    def __init__(self, nombre, vida_max, ataque_base, defenderse, armadura):
         self.nombre = nombre
-        self.vida = vida
         self.vida_max = vida_max
+        self.vida = vida_max # Empezamos con la vida al máximo
         self.ataque_base = ataque_base
         self.defenderse = defenderse
         self.armadura = armadura
 
-# Objetos
+    # Este metodo es el que actualiza el estado del personaje cuando es golpeado en combate
+    def recibir_daño(self, cantidad):
+        """Resta vida y asegura que no baje de 0."""
+        self.vida -= cantidad
+        if self.vida < 0:
+            self.vida = 0
 
-heroe = Personaje("Héroe", 100, 100, 10, False, False)
-soldado = Personaje("Soldado", 35, 35, random.randint(4, 6), False, False)
-jefe = Personaje("Jefe", 50, 50, random.randint(7, 9), False, False)
+    # Este metodo es de tipo booleano, desterminará si el personaje está vivo o no, devuelve true o false
+    def esta_vivo(self):
+        return self.vida > 0
 
+    # Este metodo nos permite recuperar salud
+    def curar(self, cantidad):
+        self.vida += cantidad
+        if self.vida > self.vida_max:
+            self.vida = self.vida_max
 
-# Funciones
+    # Este metodo permite que los enemigos suban de nivel en el sistema de oleadas
+    def increment_nivel(self):
+        """Sube las estadísticas del personaje."""
+        self.ataque_base += 2
+        self.vida_max += 5
+        self.vida = self.vida_max # Sanar al subir de nivel
 
-# Fuincion para incremento de nivel dependiendo oleada
-def increment_nivel (personaje):
-    incremento = 2
-    incremento_vida = 5
-    personaje.ataque_base += incremento
-    personaje.vida_max += incremento_vida
+    # Este metodo muestra el estado del personaje, mostrando la vida que queda
+    def mostrar_estado(self):
+        print(f"{self.nombre} | Vida: {self.vida}/{self.vida_max}")
 
-# Función de cambio de vida al ser atacado. Resta vida actual del heroe dependiendo del ataque del soldado o jefe
-def newhp (personaje, ataque_base):
-    personaje.vida = personaje.vida - ataque_base
-
-    if personaje.vida < 0:
-        personaje.vida = 0
-
-#Funcion para determinar si el personaje sigue vivo
-def sigue_vivo (personaje):
-    if personaje.vida > 0:
-        return True  
+# Función para crear un enemigo
+def crear_enemigo(oleada):
+    if oleada % 3 == 0:
+        # El jefe tiene armadura media
+        enemigo = Personaje("Jefe Orco", 60, random.randint(8,10), False, copy.deepcopy(armadura_media))
     else:
-        return False
-
-#Funcion para curar el personaje, por ejemplo con pocion o magia de cura
-def curar (personaje, cantidad):
-    personaje.vida += cantidad
-
-    if personaje.vida > personaje.vida_max:
-        personaje.vida = personaje.vida_max
-
-
-#Funcion mensaje para mostrar vida personaje en cada turno
-def estado_actual(personaje):
-    print(personaje.nombre) 
-    print("vida: ", personaje.vida, "/", personaje.vida_max)
-    print("oleada")
-
-# Funcion para que la opción de defenderse no se quede pillada
-# def debug_defensa(personaje):
-#     personaje.defenderse = False
-
-# Función para determinar fallo y golpe critico
-# def golpe_suerte(personaje):
-#     suerte = random.randint(1, 100)
-#     if suerte < 5:
-#         daño = 0
-#     elif suerte < 95:
-#         daño = personaje.ataque_base
-#     else:
-#         daño = personaje.ataque_base * 2   
-#     return daño
-
-#Funcion para activar defensa y recibir solo un 20% de daño, se desactiva al usarse.
-# def defensa_on (personaje, ataque_base):
-#     if personaje.defenderse:
-#         daño = ataque_base * 0.20
-#         personaje.defenderse = False  # se desactiva tras usarla
-#     else:
-#         daño = ataque_base
+        # El soldado tiene armadura ligera
+        enemigo = Personaje("Soldado", 35, random.randint(4,6), False, copy.deepcopy(armadura_ligera))
     
-#     personaje.vida -= daño
-    
-#     if personaje.vida < 0:
-#         personaje.vida = 0
-    
+    # Aplicar dificultad según oleada
+    for _ in range(oleada - 1):
+        enemigo.increment_nivel()
+    return enemigo
