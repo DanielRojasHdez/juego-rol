@@ -1,35 +1,52 @@
 import random
-import armaduras
 
-def activar_defensa(personaje):
-    personaje.defendiendo = True
-    print(f"{personaje.nombre} se pone en guardia.")
-
-def calcular_daño_final(atacante, defensor):
-    # 1. Suerte (Crítico/Fallo)
+# Esta funcion decide el tipo de ataque realizado, para ello hemos implementado un sistema aleatorio. 
+def golpe_suerte(personaje):
+    # Determina si el ataque es normal, crítico o fallo.
     suerte = random.randint(1, 100)
-    daño = atacante.ataque_base + random.randint(-2, 2)
-    mensaje_extra = ""
+    # Habrá un 5% de fallo de ataque
+    if suerte < 5:
+        print(f"¡{personaje.nombre} falló el ataque!")
+        return 0
+    # Un 90% de ataque normal
+    elif suerte < 95:
+        print(f"Ataque normal de {personaje.nombre}.")
+        return personaje.ataque_base
+    # Y un 5% de golpe crítico
+    else:
+        print(f"¡GOLPE CRÍTICO de {personaje.nombre}!")
+        return personaje.ataque_base * 2
 
-    if suerte <= 10:  # 10% Fallo
-        return 0, "¡Falló el ataque!"
-    elif suerte >= 90: # 10% Crítico
-        daño *= 2
-        mensaje_extra = "¡GOLPE CRÍTICO! "
+# Esta funcion determina si el defensor activo un "escudo" en el turno anterior, de esta manera el daño se reduce gracias a la proteccion.
+def defensa_on(personaje, daño):
+    # Si el personaje está defendiendo, reduce el daño al 20%.
+    if personaje.defenderse:
+        daño_final = int(daño * 0.8)
+        # Reseteo del atributo 'defenderse' a false.
+        personaje.defenderse = False 
+        print(f"¡{personaje.nombre} amortiguó el golpe con su defensa!")
+        return daño_final
+    # Si el personaje no está defendiendo, recibe el 100% del daño.
+    return daño
 
-    # 2. Defensa (si el defensor activó defensa el turno anterior)
-    if defensor.defendiendo:
-        daño = int(daño * 0.3)  # Reduce al 30% del daño
-        defensor.defendiendo = False # Se gasta la defensa
-        mensaje_extra += "(Defendido) "
 
-    # 3. Armadura (llamamos al archivo de tu compañero)
-    daño_tras_armadura = armaduras.aplicar_armadura(defensor, daño)
+# --- EL CORAZÓN DEL COMBATE ---
+def ejecutar_ataque(atacante, defensor):
+    # Calculamos daño base (suerte)
+    daño_base = golpe_suerte(atacante)
     
-    return daño_tras_armadura, mensaje_extra
-
-def hacer_ataque(atacante, defensor):
-    daño, efecto = calcular_daño_final(atacante, defensor)
-    defensor.recibir_daño(daño)
+    if daño_base > 0:
+        # Reducción del daño por activar la defensa, comprobando si el atributo 'defenderse' del defensor es true(está activo)
+        daño_tras_defensa = defensa_on(defensor, daño_base)
+        
+        # Reducción por armadura
+        if defensor.armadura:
+            daño_final = defensor.armadura.reducir_daño(daño_tras_defensa)
+        
+        # Aplicar daño a la vida del defensor
+        defensor.recibir_daño(daño_final)
+        # Si el daño base es mayor a 0, devolvemos el daño final 
+        return daño_final
     
-    return f"{efecto}{atacante.nombre} ataca a {defensor.nombre} haciendo {daño} de daño."
+    # Si el daño base es 0, es decir, 'fallo', devolvemos 0
+    return 0
