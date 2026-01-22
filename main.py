@@ -65,7 +65,7 @@ def main():
                 print("Pulsa 3 para comprar 1 reparación de armadura")
                 print("Pulsa 4 para comprar 2 reparaciones de armadura")
                 catalogo()
-                opcion = input("¿Que deseas comprar?")
+                opcion = input("¿Que deseas comprar?: ")
                 tienda(heroe, opcion)
                 continue
 

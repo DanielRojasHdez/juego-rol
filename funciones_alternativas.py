@@ -44,7 +44,7 @@ def tienda(personaje, opcion):
         personaje.comprar_reparaciones(2)
         personaje.oro -= 8
     else:
-        print("Opción no válida")
+        print("Opción no válida, revisa la cantidad de oro que tienes y elige bien entre las opciones válidas.")
     
 
 
