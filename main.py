@@ -7,7 +7,7 @@ from armaduras import armadura_ligera, armadura_media, armadura_pesada
 
 # Importamos tus funciones de combate
 from combate import ejecutar_ataque
-from funciones_alternativas import leer_record, guardar_record, limpiar_pantalla, pedir_opcion
+from funciones_alternativas import leer_record, guardar_record, limpiar_pantalla, pedir_opcion, tienda, catalogo
 
 
 # --- PROGRAMA PRINCIPAL ---
@@ -16,39 +16,75 @@ def main():
     heroe = Personaje("Héroe", 100, 12, False, copy.deepcopy(armadura_media))
     oleada = 1
 
-    print("=== INICIO DEL RPG POR OLEADAS ===")
+    print("\n=== INICIO DEL RPG POR OLEADAS ===")
 
     while heroe.esta_vivo():
-        
+    
         enemigo = crear_enemigo(oleada)
-        print(f"\n>>> Oleada {oleada}: Aparece un {enemigo.nombre} <<<")
+        print(f"\n>>> Oleada {oleada}: Aparece un {enemigo.nombre} <<<\n")
 
         while heroe.esta_vivo() and enemigo.esta_vivo():
             # Mostrar estados
+            print("Estadísticas Héroe:")
             heroe.mostrar_estado()
-            if heroe.armadura: print(f"Defensa: {heroe.armadura}")
+            print()
+            # if heroe.armadura: print(f"Defensa: {heroe.armadura}")
+            print("Estadísticas Enemigo:")
             enemigo.mostrar_estado()
 
             # Turno Jugador
             opcion = pedir_opcion()
+            print("\n--------------- ESTADÍSTICAS DE LA RONDA ---------------")
+            print("Turno Héroe:")
             if opcion == 1:
                 daño_heroe = ejecutar_ataque(heroe, enemigo)
-                print(f"Hiciste {daño_heroe} de daño.")
+                print(f"Hiciste {daño_heroe} de daño.\n")
             elif opcion == 2:
                 heroe.defenderse = True
-                print("Te pones en guardia...")
+                print("Te pones en guardia...\n")
+            elif opcion == 3:
+                if heroe.curas_disponibles > 0:
+                    heroe.curar(15)
+                    heroe.curas_disponibles -= 1
+                    print(f"Te has curado. Te quedan {heroe.curas_disponibles} disponibles.\n")
+                else:
+                    print("Has llegado al límite de curas.\n")
+                    continue
+            elif opcion == 4:
+                if heroe.reparaciones_disponibles > 0:
+                    heroe.armadura.reparar(3)
+                    heroe.reparaciones_disponibles -= 1
+                    print(f"Has reparado tu armadura. Te quedan {heroe.reparaciones_disponibles} disponibles\n")
+                else:
+                    print("Has llegado al límite de reparaciones.\n")
+                    continue
             else:
-                heroe.curar(15)
-                print("Te has curado.")
+                print("Bienvenido a la tienda")
+                print("Pulsa 1 para comprar 1 cura")
+                print("Pulsa 2 para comprar 2 curas")
+                print("Pulsa 3 para comprar 1 reparación de armadura")
+                print("Pulsa 4 para comprar 2 reparaciones de armadura")
+                catalogo()
+                opcion = input("¿Que deseas comprar?")
+                tienda(heroe, opcion)
+                continue
 
             if not enemigo.esta_vivo():
                 print(f"¡{enemigo.nombre} derrotado!")
                 oleada += 1
+                heroe.increment_nivel()
+                heroe.aumento_oro(enemigo)
                 break
 
             # Turno Enemigo
+            print("Turno Enemigo:")
             daño_enemigo = ejecutar_ataque(enemigo, heroe)
-            print(f"El enemigo te hizo {daño_enemigo} de daño.")
+            print(f"El enemigo te hizo {daño_enemigo} de daño.\n")
+
+            # Separador de turnos
+            print("-------------------- NUEVO TURNO --------------------")
+
+        # Limpiamos la terminal
         limpiar_pantalla()
     print(f"\n--- FIN --- Oleadas superadas: {oleada-1}")
     if (oleada-1) > record:

@@ -10,11 +10,11 @@ def golpe_suerte(personaje):
         return 0
     # Un 90% de ataque normal
     elif suerte < 95:
-        print(f"Ataque normal de {personaje.nombre}.")
+        print(f"{personaje.nombre} ha realizado un ataque normal.")
         return personaje.ataque_base
     # Y un 5% de golpe crítico
     else:
-        print(f"¡GOLPE CRÍTICO de {personaje.nombre}!")
+        print(f"¡{personaje.nombre} ha realizado un GOLPE CRÍTICO!")
         return personaje.ataque_base * 2
 
 # Esta funcion determina si el defensor activo un "escudo" en el turno anterior, de esta manera el daño se reduce gracias a la proteccion.

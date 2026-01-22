@@ -42,9 +42,9 @@ class Armadura:
 
     def __str__(self):
         """Este método especial permite que al hacer print(armadura) salga el texto formateado."""
-        return f"{self.nombre} ({self.durabilidad}/{self.durabilidad_max})"
+        return f"{self.nombre}: {self.durabilidad}/{self.durabilidad_max}"
 
 # Estos se quedan fuera porque son "moldes" predefinidos
-armadura_ligera = Armadura("ligera", "Armadura ligera", 2, 50)
-armadura_media = Armadura("media", "Armadura media", 4, 40)
-armadura_pesada = Armadura("pesada", "Armadura pesada", 6, 30)
+armadura_ligera = Armadura("ligera", "Armadura ligera", 2, 10)
+armadura_media = Armadura("media", "Armadura media", 4, 8)
+armadura_pesada = Armadura("pesada", "Armadura pesada", 6, 6)
