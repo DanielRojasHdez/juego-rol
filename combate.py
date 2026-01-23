@@ -19,8 +19,9 @@ def golpe_suerte(personaje):
 
 # Esta funcion determina si el defensor activo un "escudo" en el turno anterior, de esta manera el daño se reduce gracias a la proteccion.
 def defensa_on(personaje, daño):
-    # Si el personaje está defendiendo, reduce el daño al 20%.
-    if personaje.defenderse:
+    # Si el personaje está defendiendo, reduce el daño al X%.
+    # Utilizamos el metodo hasattr para detectar si el personaje en cuestion tiene el atributo 'defenderse' para diferenciar entre un heroe y un enemigo
+    if hasattr(personaje, 'defenderse') and personaje.defenderse:
         daño_final = int(daño * 0.8)
         # Reseteo del atributo 'defenderse' a false.
         personaje.defenderse = False 
@@ -39,7 +40,7 @@ def ejecutar_ataque(atacante, defensor):
         # Reducción del daño por activar la defensa, comprobando si el atributo 'defenderse' del defensor es true(está activo)
         daño_tras_defensa = defensa_on(defensor, daño_base)
         
-        # Reducción por armadura
+        # Reducción del daño recibido por armadura
         if defensor.armadura:
             daño_final = defensor.armadura.reducir_daño(daño_tras_defensa)
         

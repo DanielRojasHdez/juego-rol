@@ -23,7 +23,7 @@ def limpiar_pantalla():
 # --- FUNCIONES DE APOYO ---
 def pedir_opcion():
     while True:
-        print("\n1) Atacar | 2) Defender | 3) Curar (+15) | 4) Reparar Armadura | 5) Tienda")
+        print("\n1) Atacar | 2) Defender | 3) Curar (+15) | 4) Reparar Armadura (+3) | 5) Tienda")
         opcion = input("Elige acción: ").strip()
         if opcion in ("1", "2", "3", "4", "5"): return int(opcion)
         print("Opción no válida.")
@@ -47,10 +47,11 @@ def tienda(personaje, opcion):
         print("Opción no válida, revisa la cantidad de oro que tienes y elige bien entre las opciones válidas.")
     
 
-
-
+# Cátalogo de la tienda
 def catalogo():
-    print("1 cura: 20 oro")
-    print("2 curas: 30 oro")
-    print("1 reparación de armadura: 5 oro")
-    print("2 reparaciones de armadura: 8 oro")
+    print("-- CURAS -- ")
+    print("1 Cura: 20 oro")
+    print("2 Curas: 30 oro\n")
+    print("-- REPARACIONES --")
+    print("1 Reparación de armadura: 5 oro")
+    print("2 Reparaciones de armadura: 8 oro\n")

@@ -2,7 +2,7 @@ import random
 import copy
 
 # Importamos las clases y las armaduras predefinidas
-from personajes import Personaje, crear_enemigo
+from personajes import Heroe, Enemigo, crear_enemigo
 from armaduras import armadura_ligera, armadura_media, armadura_pesada
 
 # Importamos tus funciones de combate
@@ -13,10 +13,10 @@ from funciones_alternativas import leer_record, guardar_record, limpiar_pantalla
 # --- PROGRAMA PRINCIPAL ---
 def main():
     record = leer_record()
-    heroe = Personaje("Héroe", 100, 12, False, copy.deepcopy(armadura_media))
+    heroe = Heroe("Héroe", 100, 12, copy.deepcopy(armadura_media))
     oleada = 1
 
-    print("\n=== INICIO DEL RPG POR OLEADAS ===")
+    print("\n======= INICIO DEL RPG POR OLEADAS =======")
 
     while heroe.esta_vivo():
     
@@ -59,11 +59,11 @@ def main():
                     print("Has llegado al límite de reparaciones.\n")
                     continue
             else:
-                print("Bienvenido a la tienda")
-                print("Pulsa 1 para comprar 1 cura")
-                print("Pulsa 2 para comprar 2 curas")
-                print("Pulsa 3 para comprar 1 reparación de armadura")
-                print("Pulsa 4 para comprar 2 reparaciones de armadura")
+                print("\n******** BIENVENIDO A LA TIENDA ********\n")
+                print("- Pulsa 1 para comprar 1 cura")
+                print("- Pulsa 2 para comprar 2 curas")
+                print("- Pulsa 3 para comprar 1 reparación de armadura")
+                print("- Pulsa 4 para comprar 2 reparaciones de armadura\n")
                 catalogo()
                 opcion = input("¿Que deseas comprar?: ")
                 tienda(heroe, opcion)

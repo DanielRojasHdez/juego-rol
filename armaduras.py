@@ -1,3 +1,4 @@
+# CLASE ARMADURA
 class Armadura:
     # Constructor: se ejecuta en el momento en el que se crea una armadura
     def __init__(self, tipo, nombre, reduccion, durabilidad_max):
@@ -10,7 +11,7 @@ class Armadura:
     def reducir_daño(self, daño):
         """Devuelve el daño tras aplicar la reducción y desgastar la armadura."""
         # Si la durabilidad es menor o igual a 0 significa que está rota, es decir, no tenemos proteccion de armadura, entonces devolvemos el daño tal cual.
-        if self.durabilidad <= 0:
+        if self.esta_rota():
             return daño
         
         # Si la armadura es mayor a 0 restamos su valor de reducción al daño que hará el atacante
@@ -40,8 +41,8 @@ class Armadura:
     def esta_rota(self):
         return self.durabilidad == 0
 
+    # Metodo especial permite que al hacer print(armadura) salga el texto formateado.
     def __str__(self):
-        """Este método especial permite que al hacer print(armadura) salga el texto formateado."""
         return f"{self.nombre}: {self.durabilidad}/{self.durabilidad_max}"
 
 # Estos se quedan fuera porque son "moldes" predefinidos
