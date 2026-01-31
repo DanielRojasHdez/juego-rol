@@ -2,7 +2,7 @@ import random
 import copy
 
 # Importamos las clases y las armaduras predefinidas
-from personajes import Heroe, Enemigo, crear_enemigo
+from personajes import Heroe, Enemigo, crear_enemigo, asignar_armadura
 from armaduras import armadura_ligera, armadura_media, armadura_pesada
 
 # Importamos tus funciones de combate
@@ -13,14 +13,16 @@ from funciones_alternativas import leer_record, guardar_record, limpiar_pantalla
 # --- PROGRAMA PRINCIPAL ---
 def main():
     record = leer_record()
-    heroe = Heroe("Héroe", 100, 12, copy.deepcopy(armadura_media))
+    armadura_heroe = asignar_armadura()
+    heroe = Heroe("Héroe", 100, 12, copy.deepcopy(armadura_heroe))
     oleada = 1
 
-    print("\n======= INICIO DEL RPG POR OLEADAS =======")
+    print("\n======= INICIO DEL RPG POR OLEADAS =======\n")
 
     while heroe.esta_vivo():
     
         enemigo = crear_enemigo(oleada)
+        print(f"********** Record actual: {record} **********")
         print(f"\n>>> Oleada {oleada}: Aparece un {enemigo.nombre} <<<\n")
 
         while heroe.esta_vivo() and enemigo.esta_vivo():
@@ -71,9 +73,9 @@ def main():
 
             if not enemigo.esta_vivo():
                 print(f"¡{enemigo.nombre} derrotado!")
+                heroe.aumento_oro(enemigo, oleada)
                 oleada += 1
                 heroe.increment_nivel()
-                heroe.aumento_oro(enemigo)
                 break
 
             # Turno Enemigo

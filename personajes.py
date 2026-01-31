@@ -32,12 +32,12 @@ class Personaje:
             self.vida_max += 10
             self.vida = self.vida_max
         elif self.nombre == 'Héroe':
-            self.ataque_base += 1
+            self.ataque_base += 3
             self.vida_max += 2
-            self.vida += 5
+            self.vida += 10
             if self.vida > self.vida_max:
                 self.vida = self.vida_max
-        # Si el nombre del enemigo no es 'Jefe Orco' aumentará sus carácteristicas de otra forma determinada
+        # Si el personaje no es 'Jefe Orco' ni 'Héroe' aumentará sus carácteristicas de otra forma determinada
         else:
             self.ataque_base += 2
             self.vida_max += 5
@@ -74,15 +74,24 @@ class Heroe(Personaje):
         print(f"Has comprado {cantidad} reparacion/es. Tienes {self.reparaciones_disponibles} reparaciones de armadura disponibles.")
 
     # Metodo para aumentar el oro cuando derrotemos una oleada 
-    def aumento_oro(self, enemigo):
-        if enemigo.nombre == 'Jefe Orco':
-            self.oro += 30
+    def aumento_oro(self, enemigo, oleada):
+        if oleada > 1:
+            incremento_oro_por_oleada = 10
+            if enemigo.nombre == 'Jefe Orco':
+                aumento_oro_por_oleada = incremento_oro_por_oleada * (oleada -1)
+                self.oro += (30 + aumento_oro_por_oleada)    
+            else:
+                aumento_oro_por_oleada = incremento_oro_por_oleada * (oleada -1)
+                self.oro += (15 + aumento_oro_por_oleada)
         else:
-            self.oro += 15
+            if enemigo.nombre == 'Jefe Orco':
+                self.oro += 30     
+            else:
+                self.oro += 15 
 
     # Este metodo muestra el estado del Heroe, mostrando la vida que queda
     def mostrar_estado(self):
-        print(f"{self.nombre} | Vida: {self.vida}/{self.vida_max} | {self.armadura} | Oro: {self.oro}")
+        print(f"{self.nombre} | Vida: {self.vida}/{self.vida_max} | {self.armadura} | Ataque base: {self.ataque_base} | Oro: {self.oro} | Curas Disponibles: {self.curas_disponibles} | Reparaciones Disponibles: {self.reparaciones_disponibles}")
 
 
 
@@ -93,17 +102,35 @@ class Enemigo(Personaje):
 
     # Este metodo muestra el estado del Enemigo, mostrando la vida que queda
     def mostrar_estado(self):
-        print(f"{self.nombre} | Vida: {self.vida}/{self.vida_max} | {self.armadura}")
+        print(f"{self.nombre} | Vida: {self.vida}/{self.vida_max} | {self.armadura} | Ataque base: {self.ataque_base}")
 
 
 
 # FUNCIONES ADICIONALES
+# Función para devolver un tipo de armadura concreta
+def asignar_armadura():
+    # Bucle infinito controlado para que la elección sea válida
+    while True: 
+        # Elecciones
+        print("\nIntroduce el número de la armadura que quieres utilizar:")
+        print("1. Armadura ligera: Protección(2), Duración(10)")
+        print("2. Armadura media: Protección(4), Duración(8)")
+        print("3. Armadura pesada: Protección(6), Duración(6)\n")
+        
+        armadura_heroe = input("Elección (1, 2 o 3): ")
+
+        if armadura_heroe == "1": return armadura_ligera
+        elif armadura_heroe == "2": return armadura_media
+        elif armadura_heroe == "3": return armadura_pesada
+        else: print("\n❌ Elección incorrecta. Por favor, introduce 1, 2 o 3.")
+
 # Función para crear un enemigo según la oleada a la que nos enfrentemos
 def crear_enemigo(oleada):
     # Si el resto de oleada dividido entre 3 es 0 creamos un jefe
     if oleada % 3 == 0:
         # Creación del objeto enemigo con características de jefe
-        enemigo = Enemigo("Jefe Orco", 60, random.randint(8,10), copy.deepcopy(armadura_media))
+        # enemigo = Enemigo("Jefe Orco", 60, random.randint(8,10), copy.deepcopy(armadura_media))
+        enemigo = Enemigo("Jefe Orco", 60, 8, copy.deepcopy(armadura_media))
         # Cáculo para determinar porque jefe vamos en la partida
         numero_jefe = int(oleada / 3)
         # Aumento del nivel del jefe (Ejemplo: si vamos porel jefe numero 2 aumentará de nivel 1 vez)
@@ -113,7 +140,8 @@ def crear_enemigo(oleada):
     # Si el resto de oleada entre 3 no es 0 creamos un soldado normal
     else:
         # Creación del objeto enemigo con características de soldado
-        enemigo = Enemigo("Soldado", 35, random.randint(4,6), copy.deepcopy(armadura_ligera))
+        # enemigo = Enemigo("Soldado", 35, random.randint(4,6), copy.deepcopy(armadura_ligera))
+        enemigo = Enemigo("Soldado", 35, 4, copy.deepcopy(armadura_ligera))
         # Aumento de nivel de soldado según la oleada (Ejemplo: si vamos por la oleada 3 el enemigo aumenta 2 veces su nivel)
         for _ in range(oleada - 1):
             enemigo.increment_nivel()
