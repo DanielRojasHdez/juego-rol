@@ -1,4 +1,6 @@
+# CLASE ARMADURA
 class Armadura:
+    # Constructor: se ejecuta en el momento en el que se crea una armadura
     def __init__(self, tipo, nombre, reduccion, durabilidad_max):
         self.tipo = tipo
         self.nombre = nombre
@@ -6,47 +8,44 @@ class Armadura:
         self.durabilidad_max = durabilidad_max
         self.durabilidad = durabilidad_max
 
-armadura_ligera = Armadura("ligera", "Armadura ligera", 2, 50)
-armadura_media = Armadura("media", "Armadura media", 4, 40)
-armadura_pesada = Armadura("pesada", "Armadura pesada", 6, 30)
+    def reducir_daño(self, daño):
+        """Devuelve el daño tras aplicar la reducción y desgastar la armadura."""
+        # Si la durabilidad es menor o igual a 0 significa que está rota, es decir, no tenemos proteccion de armadura, entonces devolvemos el daño tal cual.
+        if self.esta_rota():
+            return daño
+        
+        # Si la armadura es mayor a 0 restamos su valor de reducción al daño que hará el atacante
+        daño_final = daño - self.reduccion
+        # Como no queremos que el golpe recibido nos cure, bloqueamos en 0 si el resultado de el daño menos la reduccion nos da numeros negativos (ejemplo: si el daño recibido es 2 y la armadura nos reduce 5 el resultado sería -3, lo que hacemos es que dejamos el daño recibido en 0)
+        if daño_final < 0:
+            daño_final = 0
+        
+        # Llamamos al metodo perder_durabilidad para que nos reduzca la durabilidad de la armadura.
+        self.perder_durabilidad()
+        return daño_final
 
-# Funcion para aplicar reduccion de daño de la armadura y gasta durabilidad si protege
-def reducir_daño(armadura, daño):
-    if armadura is None:
-        return daño
-    if armadura.durabilidad <= 0:
-        return daño
-    daño_final = daño - armadura.reduccion
-    if daño_final < 0:
-        daño_final = 0
-    perder_durabilidad(armadura)
-    return daño_final
+    # Cada vez que recibamos un golpe la armadura se deteriora perdiendo 1 punto 
+    def perder_durabilidad(self):
+        """Baja la durabilidad en 1."""
+        if self.durabilidad > 0:
+            self.durabilidad -= 1
 
-# Funcion que Reduce la durabilidad de la armadura en 1.
-def perder_durabilidad(armadura):
-    if armadura.durabilidad > 0:
-        armadura.durabilidad -= 1
+    # Metodo de reparación de la armadura, cuando llamemos a este metodo la armadura se reparará la cantidad de puntos que le hallamos pasado por el argumento
+    def reparar(self, cantidad):
+        """Sube la durabilidad sin pasar del máximo."""
+        self.durabilidad += cantidad
+        if self.durabilidad > self.durabilidad_max:
+            self.durabilidad = self.durabilidad_max
 
-# Funcion para reparar la armadura sin superar el máximo.
-def reparar_armadura(armadura, cantidad):
-    if armadura is None:
-        return
+    # Metodo para detectar si la armadura está rota, si el metodo nos devuelve true significa que está rota
+    def esta_rota(self):
+        return self.durabilidad == 0
 
-    armadura.durabilidad += cantidad
+    # Metodo especial permite que al hacer print(armadura) salga el texto formateado.
+    def __str__(self):
+        return f"{self.nombre}: {self.durabilidad}/{self.durabilidad_max}"
 
-    if armadura.durabilidad > armadura.durabilidad_max:
-        armadura.durabilidad = armadura.durabilidad_max
-
-# Funcion para saber si la armadura esta rota. Devuelve true
-def esta_rota(armadura):
-    if armadura is None:
-        return True
-
-    return armadura.durabilidad == 0
-
-# Funcion para mostrar el estado de la armadura
-def estado_armadura(armadura):
-    if armadura is None:
-        print("Sin armadura")
-    else:
-        print(f"{armadura.nombre} ({armadura.durabilidad}/{armadura.durabilidad_max})")
+# Estos se quedan fuera porque son "moldes" predefinidos
+armadura_ligera = Armadura("ligera", "Armadura ligera", 2, 10)
+armadura_media = Armadura("media", "Armadura media", 4, 8)
+armadura_pesada = Armadura("pesada", "Armadura pesada", 6, 6)
