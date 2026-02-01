@@ -11,7 +11,7 @@ class Personaje:
         self.vida = vida_max # Empezamos con la vida al máximo
         self.ataque_base = ataque_base
         self.armadura = armadura
-        self.curas_combate = 0
+        self.ultimo_turno_cura = -4
         self.reparaciones_combate = 0
 
     # Este metodo es el que actualiza el estado del personaje cuando es golpeado en combate
@@ -78,18 +78,18 @@ class Heroe(Personaje):
     # Metodo para aumentar el oro cuando derrotemos una oleada 
     def aumento_oro(self, enemigo, oleada):
         if oleada > 1:
-            incremento_oro_por_oleada = 10
+            incremento_oro_por_oleada = 4
             if enemigo.nombre == 'Jefe Orco':
                 aumento_oro_por_oleada = incremento_oro_por_oleada * (oleada -1)
-                self.oro += (30 + aumento_oro_por_oleada)    
+                self.oro += (20 + aumento_oro_por_oleada)    
             else:
                 aumento_oro_por_oleada = incremento_oro_por_oleada * (oleada -1)
-                self.oro += (15 + aumento_oro_por_oleada)
+                self.oro += (8 + aumento_oro_por_oleada)
         else:
             if enemigo.nombre == 'Jefe Orco':
-                self.oro += 30     
+                self.oro += 20     
             else:
-                self.oro += 15 
+                self.oro += 8 
 
     # Este metodo muestra el estado del Heroe, mostrando la vida que queda
     def mostrar_estado(self):
@@ -110,21 +110,21 @@ class Enemigo(Personaje):
 
 # FUNCIONES ADICIONALES
 # Función para devolver un tipo de armadura concreta
-def asignar_armadura():
-    # Bucle infinito controlado para que la elección sea válida
-    while True: 
-        # Elecciones
-        print("\nIntroduce el número de la armadura que quieres utilizar:")
-        print("1. Armadura ligera: Protección(2), Duración(10)")
-        print("2. Armadura media: Protección(4), Duración(8)")
-        print("3. Armadura pesada: Protección(6), Duración(6)\n")
+# def asignar_armadura():
+#     # Bucle infinito controlado para que la elección sea válida
+#     while True: 
+#         # Elecciones
+#         print("\nIntroduce el número de la armadura que quieres utilizar:")
+#         print("1. Armadura ligera: Protección(2), Duración(10)")
+#         print("2. Armadura media: Protección(4), Duración(8)")
+#         print("3. Armadura pesada: Protección(6), Duración(6)\n")
         
-        armadura_heroe = input("Elección (1, 2 o 3): ")
+#         armadura_heroe = input("Elección (1, 2 o 3): ")
 
-        if armadura_heroe == "1": return armadura_ligera
-        elif armadura_heroe == "2": return armadura_media
-        elif armadura_heroe == "3": return armadura_pesada
-        else: print("\n❌ Elección incorrecta. Por favor, introduce 1, 2 o 3.")
+#         if armadura_heroe == "1": return armadura_ligera
+#         elif armadura_heroe == "2": return armadura_media
+#         elif armadura_heroe == "3": return armadura_pesada
+#         else: print("\n❌ Elección incorrecta. Por favor, introduce 1, 2 o 3.")
 
 # Función para crear un enemigo según la oleada a la que nos enfrentemos
 def crear_enemigo(oleada):

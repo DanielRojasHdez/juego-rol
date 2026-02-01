@@ -31,18 +31,18 @@ def pedir_opcion():
 
 # TIENDA
 def tienda(personaje, opcion):
-    if opcion == "1" and personaje.oro >= 20:
+    if opcion == "1" and personaje.oro >= 35:
         personaje.comprar_curas(1)
-        personaje.oro -= 20
-    elif opcion == "2" and personaje.oro >= 30:
+        personaje.oro -= 35
+    elif opcion == "2" and personaje.oro >= 60:
         personaje.comprar_curas(2)
-        personaje.oro -= 30
-    elif opcion == "3" and personaje.oro >= 5:
+        personaje.oro -= 60
+    elif opcion == "3" and personaje.oro >= 20:
         personaje.comprar_reparaciones(1)
-        personaje.oro -= 5
-    elif opcion == "4" and personaje.oro >= 8:
+        personaje.oro -= 20
+    elif opcion == "4" and personaje.oro >= 35:
         personaje.comprar_reparaciones(2)
-        personaje.oro -= 8
+        personaje.oro -= 35
     else:
         print("Opción no válida, revisa la cantidad de oro que tienes y elige bien entre las opciones válidas.")
     
@@ -50,8 +50,8 @@ def tienda(personaje, opcion):
 # Cátalogo de la tienda
 def catalogo():
     print("-- CURAS -- ")
-    print("1 Cura: 20 oro")
-    print("2 Curas: 30 oro\n")
+    print("1 Cura: 35 oro")
+    print("2 Curas: 60 oro\n")
     print("-- REPARACIONES --")
-    print("1 Reparación de armadura: 5 oro")
-    print("2 Reparaciones de armadura: 8 oro\n")
+    print("1 Reparación de armadura: 20 oro")
+    print("2 Reparaciones de armadura: 35 oro\n")

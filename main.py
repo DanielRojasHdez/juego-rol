@@ -2,7 +2,7 @@ import random
 import copy
 
 # Importamos las clases y las armaduras predefinidas
-from personajes import Heroe, Enemigo, crear_enemigo, asignar_armadura
+from personajes import Heroe, Enemigo, crear_enemigo
 from armaduras import armadura_ligera, armadura_media, armadura_pesada
 
 # Importamos tus funciones de combate
@@ -13,12 +13,12 @@ from funciones_alternativas import leer_record, guardar_record, limpiar_pantalla
 # --- PROGRAMA PRINCIPAL ---
 def main():
     record = leer_record()
-    armadura_heroe = asignar_armadura()
-    heroe = Heroe("Héroe", 100, 12, copy.deepcopy(armadura_heroe))
+    # armadura_heroe = asignar_armadura()
+    heroe = Heroe("Héroe", 100, 12, copy.deepcopy(armadura_ligera))
     oleada = 1
 
     print("\n======= INICIO DEL RPG POR OLEADAS =======\n")
-
+    turno = 1
     while heroe.esta_vivo():
     
         enemigo = crear_enemigo(oleada)
@@ -35,7 +35,7 @@ def main():
             # if heroe.armadura: print(f"Defensa: {heroe.armadura}")
             print("Estadísticas Enemigo:")
             enemigo.mostrar_estado()
-
+            print()
             # Turno Jugador
             opcion = pedir_opcion()
             print("\n--------------- ESTADÍSTICAS DE LA RONDA ---------------")
@@ -47,14 +47,16 @@ def main():
                 heroe.defenderse = True
                 print("Te pones en guardia...\n")
             elif opcion == 3:
-                if heroe.curas_disponibles > 0 and heroe.curas_combate < 2:
+                turnos_restantes = 4 - (turno - heroe.ultimo_turno_cura)
+                
+                if heroe.curas_disponibles > 0 and turno - heroe.ultimo_turno_cura >= 4:
                     heroe.curar(15)
                     heroe.curas_disponibles -= 1
-                    heroe.curas_combate += 1
-                    print(f"Te has curado ({heroe.curas_combate}/2 este combate).\n")
+                    heroe.ultimo_turno_cura = turno
+                    print("Te has curado (+15). Próxima cura disponible en 4 turnos.\n")
                     continue
                 else:
-                    print("No puedes curarte más en este combate.\n")
+                    print(f"La cura está en enfriamiento ({turnos_restantes} turnos restantes).\n")
                     continue
             elif opcion == 4:
                 if heroe.reparaciones_disponibles > 0 and heroe.reparaciones_combate < 1:
@@ -66,33 +68,33 @@ def main():
                 else:
                     print("No puedes reparar más la armadura en este combate.\n")
                     continue
-            else:
-                while True:
-                    print("\n******** BIENVENIDO A LA TIENDA ********\n")
-                    print(f"🪙  Oro disponible: {heroe.oro}\n")
+            # else:
+            #     while True:
+            #         print("\n******** BIENVENIDO A LA TIENDA ********\n")
+            #         print(f"🪙  Oro disponible: {heroe.oro}\n")
 
-                    print("- Pulsa 0 para salir sin comprar")
-                    print("- Pulsa 1 para comprar 1 cura")
-                    print("- Pulsa 2 para comprar 2 curas")
-                    print("- Pulsa 3 para comprar 1 reparación de armadura")
-                    print("- Pulsa 4 para comprar 2 reparaciones de armadura\n")
+            #         print("- Pulsa 0 para salir sin comprar")
+            #         print("- Pulsa 1 para comprar 1 cura")
+            #         print("- Pulsa 2 para comprar 2 curas")
+            #         print("- Pulsa 3 para comprar 1 reparación de armadura")
+            #         print("- Pulsa 4 para comprar 2 reparaciones de armadura\n")
 
-                    catalogo()
+            #         catalogo()
 
-                    opcion_tienda = input("¿Qué deseas comprar?: ").strip()
+            #         opcion_tienda = input("¿Qué deseas comprar?: ").strip()
 
-                    # Validación de entrada
-                    if opcion_tienda not in ("0", "1", "2", "3", "4"):
-                        print("Opción no válida. Elige un número entre 0 y 4.\n")
-                        continue
+            #         # Validación de entrada
+            #         if opcion_tienda not in ("0", "1", "2", "3", "4"):
+            #             print("Opción no válida. Elige un número entre 0 y 4.\n")
+            #             continue
 
-                    # Salir de la tienda
-                    if opcion_tienda == "0":
-                        print("Sales de la tienda sin comprar nada.\n")
-                        break
+            #         # Salir de la tienda
+            #         if opcion_tienda == "0":
+            #             print("Sales de la tienda sin comprar nada.\n")
+            #             break
 
-                    tienda(heroe, opcion_tienda)
-                continue
+            #         tienda(heroe, opcion_tienda)
+            #     continue
 
 
             if not enemigo.esta_vivo():
@@ -105,14 +107,15 @@ def main():
                         print("\n🛒 MERCADER TRAS LA BATALLA 🛒\n")
                         print(f"🪙   Oro disponible: {heroe.oro}\n")
                         print("0) Salir")
-                        print("1) 1 Cura -> 20 oro")
-                        print("2) 2 Curas -> 30 oro")
-                        print("3) 1 Reparación -> 5 oro")
-                        print("4) 2 Reparaciones -> 8 oro\n")
+                        print("1) 1 Cura -> 35 oro")
+                        print("2) 2 Curas -> 60 oro")
+                        print("3) 1 Reparación -> 20 oro")
+                        print("4) 2 Reparaciones -> 35 oro\n")
+                        print("5) Mejora de Armadura -> 100 oro\n")
 
                         opcion_tienda = input("Elige opción: ").strip()
 
-                        if opcion_tienda not in ("0", "1", "2", "3", "4"):
+                        if opcion_tienda not in ("0", "1", "2", "3", "4", "5"):
                             print("Opción no válida.\n")
                             continue
 
@@ -124,18 +127,18 @@ def main():
                 oleada += 1
                 heroe.increment_nivel()
                 break
-
+            
             # Turno Enemigo
             print("Turno Enemigo:")
             daño_enemigo = ejecutar_ataque(enemigo, heroe)
             print(f"El enemigo te hizo {daño_enemigo} de daño.\n")
-
+            turno += 1
             # Separador de turnos
             print("-------------------- NUEVO TURNO --------------------")
 
         # Limpiamos la terminal
         limpiar_pantalla()
-    print(f"\n--- FIN --- Oleadas superadas: {oleada-1}")
+    print(f"\n--- FIN --- \n Oleadas superadas: {oleada-1}")
     if (oleada-1) > record:
         guardar_record(oleada-1)
         print("¡Nuevo récord guardado!")

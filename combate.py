@@ -22,7 +22,7 @@ def defensa_on(personaje, daño):
     # Si el personaje está defendiendo, reduce el daño al X%.
     # Utilizamos el metodo hasattr para detectar si el personaje en cuestion tiene el atributo 'defenderse' para diferenciar entre un heroe y un enemigo
     if hasattr(personaje, 'defenderse') and personaje.defenderse:
-        daño_final = int(daño * 0.8)
+        daño_final = int(daño * 0.4)
         # Reseteo del atributo 'defenderse' a false.
         personaje.defenderse = False 
         print(f"¡{personaje.nombre} amortiguó el golpe con su defensa!")

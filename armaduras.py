@@ -47,5 +47,5 @@ class Armadura:
 
 # Estos se quedan fuera porque son "moldes" predefinidos
 armadura_ligera = Armadura("ligera", "Armadura ligera", 2, 10)
-armadura_media = Armadura("media", "Armadura media", 4, 8)
-armadura_pesada = Armadura("pesada", "Armadura pesada", 6, 6)
+armadura_media = Armadura("media", "Armadura media", 8, 8)
+armadura_pesada = Armadura("pesada", "Armadura pesada", 12, 6)
