@@ -22,8 +22,9 @@ def main():
     while heroe.esta_vivo():
     
         enemigo = crear_enemigo(oleada)
-        heroe.curas_combate = 0
+
         heroe.reparaciones_combate = 0
+
         print(f"********** Record actual: {record} **********")
         print(f"\n>>> Oleada {oleada}: Aparece un {enemigo.nombre} <<<\n")
 
@@ -74,36 +75,7 @@ def main():
                 else:
                     print("No puedes reparar más la armadura en este combate.\n")
                     continue
-                
-            # else:
-            #     while True:
-            #         print("\n******** BIENVENIDO A LA TIENDA ********\n")
-            #         print(f"🪙  Oro disponible: {heroe.oro}\n")
 
-            #         print("- Pulsa 0 para salir sin comprar")
-            #         print("- Pulsa 1 para comprar 1 cura")
-            #         print("- Pulsa 2 para comprar 2 curas")
-            #         print("- Pulsa 3 para comprar 1 reparación de armadura")
-            #         print("- Pulsa 4 para comprar 2 reparaciones de armadura\n")
-
-            #         catalogo()
-
-            #         opcion_tienda = input("¿Qué deseas comprar?: ").strip()
-
-            #         # Validación de entrada
-            #         if opcion_tienda not in ("0", "1", "2", "3", "4"):
-            #             print("Opción no válida. Elige un número entre 0 y 4.\n")
-            #             continue
-
-            #         # Salir de la tienda
-            #         if opcion_tienda == "0":
-            #             print("Sales de la tienda sin comprar nada.\n")
-            #             break
-
-            #         tienda(heroe, opcion_tienda)
-            #     continue
-
-            
             if not enemigo.esta_vivo():
                 print(f"¡{enemigo.nombre} derrotado!")
                 heroe.aumento_oro(enemigo, oleada)

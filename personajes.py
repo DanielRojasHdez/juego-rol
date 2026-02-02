@@ -110,23 +110,6 @@ class Enemigo(Personaje):
 
 
 # FUNCIONES ADICIONALES
-# Función para devolver un tipo de armadura concreta
-# def asignar_armadura():
-#     # Bucle infinito controlado para que la elección sea válida
-#     while True: 
-#         # Elecciones
-#         print("\nIntroduce el número de la armadura que quieres utilizar:")
-#         print("1. Armadura ligera: Protección(2), Duración(10)")
-#         print("2. Armadura media: Protección(4), Duración(8)")
-#         print("3. Armadura pesada: Protección(6), Duración(6)\n")
-        
-#         armadura_heroe = input("Elección (1, 2 o 3): ")
-
-#         if armadura_heroe == "1": return armadura_ligera
-#         elif armadura_heroe == "2": return armadura_media
-#         elif armadura_heroe == "3": return armadura_pesada
-#         else: print("\n❌ Elección incorrecta. Por favor, introduce 1, 2 o 3.")
-
 # Función para crear un enemigo según la oleada a la que nos enfrentemos
 def crear_enemigo(oleada):
     # Si el resto de oleada dividido entre 3 es 0 creamos un jefe
