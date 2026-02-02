@@ -1,26 +1,6 @@
 import os
 import personajes
-from armaduras import armadura_ligera, armadura_media, armadura_pesada
 import copy
-
-def mejorar_armadura(personaje):
-    # Si no tiene armadura (por seguridad)
-    if not personaje.armadura:
-        personaje.armadura = copy.deepcopy(armadura_ligera)
-        print("Te equipas una armadura ligera nueva.")
-        return
-
-    tipo_actual = personaje.armadura.tipo
-
-    if tipo_actual == "ligera":
-        personaje.armadura = copy.deepcopy(armadura_media)
-        print("🛡️  Tu armadura ha mejorado a ARMADURA MEDIA.")
-    elif tipo_actual == "media":
-        personaje.armadura = copy.deepcopy(armadura_pesada)
-        print("🛡️  Tu armadura ha mejorado a ARMADURA PESADA.")
-    else:
-        print("❌  Ya llevas la mejor armadura posible.")
-        return
     
 # --- LÓGICA DE RÉCORD ---
 RECORD_FILE = "record.txt"

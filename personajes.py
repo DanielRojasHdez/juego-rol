@@ -133,3 +133,25 @@ def crear_enemigo(oleada):
             enemigo.increment_nivel()
         return enemigo
     
+
+# Funcion para mejorar la armadura del personaje
+def mejorar_armadura(personaje):
+    # Si no tiene armadura (por seguridad)
+    if not personaje.armadura:
+        personaje.armadura = copy.deepcopy(armadura_ligera)
+        print("Te equipas una armadura ligera nueva.")
+        return
+
+    # Comprobación del tipo de armadura que lleva el personaje en este momento
+    tipo_actual = personaje.armadura.tipo
+
+    # Asignación de una armadura un escalón por encima de la que tiene equipada en este momento
+    if tipo_actual == "ligera":
+        personaje.armadura = copy.deepcopy(armadura_media)
+        print("🛡️  Tu armadura ha mejorado a ARMADURA MEDIA.")
+    elif tipo_actual == "media":
+        personaje.armadura = copy.deepcopy(armadura_pesada)
+        print("🛡️  Tu armadura ha mejorado a ARMADURA PESADA.")
+    else:
+        print("❌  Ya llevas la mejor armadura posible.")
+        return

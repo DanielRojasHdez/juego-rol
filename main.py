@@ -2,12 +2,12 @@ import random
 import copy
 
 # Importamos las clases y las armaduras predefinidas
-from personajes import Heroe, Enemigo, crear_enemigo
+from personajes import Heroe, Enemigo, crear_enemigo, mejorar_armadura
 from armaduras import armadura_ligera, armadura_media, armadura_pesada
 
 # Importamos tus funciones de combate
 from combate import ejecutar_ataque
-from funciones_alternativas import leer_record, guardar_record, limpiar_pantalla, pedir_opcion, tienda, mejorar_armadura
+from funciones_alternativas import leer_record, guardar_record, limpiar_pantalla, pedir_opcion, tienda
 
 
 # --- PROGRAMA PRINCIPAL ---
