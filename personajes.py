@@ -11,8 +11,7 @@ class Personaje:
         self.vida = vida_max # Empezamos con la vida al máximo
         self.ataque_base = ataque_base
         self.armadura = armadura
-        self.ultimo_turno_cura = -4
-        self.reparaciones_combate = 0
+
 
     # Este metodo es el que actualiza el estado del personaje cuando es golpeado en combate
     def recibir_daño(self, cantidad):
@@ -57,6 +56,8 @@ class Heroe(Personaje):
         self.reparaciones_disponibles = 3
         self.curas_disponibles = 3
         self.oro = 20
+        self.ultimo_turno_cura = -4
+        self.reparaciones_combate = 0
     
     # Metodos exclusivos del Heroe
     # Este metodo nos permite recuperar salud
